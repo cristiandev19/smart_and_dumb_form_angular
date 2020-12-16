@@ -9,13 +9,17 @@ import {Component} from '@angular/core';
 })
 export class PrincipalComponent {
   email : any = {
-    email: 'hola',
-    password: 'holaa'
+    email    : 'hola',
+    password : 'holaa'
   };
+  btn: boolean = false;
 
   handleEvent(event : any) {
     // console.log('event', event)
-    this.email = event;
+    const { invalid, ...data }= event
+    // console.log('data', data)
+    this.email = data;
+    this.btn = invalid;
   }
 }
 

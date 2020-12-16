@@ -1,5 +1,5 @@
 import {Component, EventEmitter,  Input,    OnInit, Output} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'email-component',
@@ -18,7 +18,12 @@ export class EmailComponent implements OnInit {
   ngOnInit() {
     this.emailForm = this._buildFormEmail(this.email);
     this.emailForm.valueChanges.subscribe(f => {
-      this.accion_emiter.emit(f);
+      console.log(this.emailForm.invalid)
+      const invalid = this.emailForm.invalid;
+      this.accion_emiter.emit({
+        ...f,
+        invalid
+      });
     })
   }
   
@@ -30,8 +35,8 @@ export class EmailComponent implements OnInit {
       }],
       password: [{
           value: email.password,
-          disabled: false
-      }]
+          disabled: false,
+      }, Validators.required]
     };
 
     return this._formBuilder.group(form);
